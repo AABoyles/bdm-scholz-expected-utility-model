@@ -304,23 +304,15 @@ class BDMScholzModel(object):
                                for actor in self.actors]
         for actor, best_offer in actor_to_best_offer:
             if best_offer:
-                print best_offer
                 actor.x = best_offer.position
 
     def run_model(self, num_rounds=1):
-        print 'Median position: %s' % self.median_position()
-        print 'Mean position: %s' % self.mean_position()
-
-        for round_ in range(1, num_rounds + 1):
-            print ''
-            print 'ROUND %d' % round_
+        print 'Round,Actor,Position,Capability,Salience,RiskAversion'
+        for round_ in range(0, num_rounds + 1):
+            for a in self.actors:
+                print ','.join([str(round_),a.name,str(a.x),str(a.c),str(a.s),str(a.r)])
             self.update_risk_aversions()
             self.update_positions()
-
-            print ''
-            print 'Median position: %s' % self.median_position()
-            print 'Mean position: %s' % self.mean_position()
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
